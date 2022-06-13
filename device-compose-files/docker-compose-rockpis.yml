@@ -3,13 +3,13 @@ version: '2'
 services:
 
   gateway-config:
-    image: suryatel/hm-config:{{CONFIG_VERSION}}
+    image: suryatel/hm-config:1cf2bfe
     depends_on:
       - dbus-session
       - diagnostics
     environment:
-      - FIRMWARE_VERSION={{FIRMWARE_VERSION}}
-      - FIRMWARE_SHORT_HASH={{ENV.FIRMWARE_SHORT_HASH}}
+      - FIRMWARE_VERSION=2022.06.02.3
+      - FIRMWARE_SHORT_HASH=4e75eee
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
       - DBUS_SESSION_BUS_ADDRESS=unix:path=/session/dbus/session_bus_socket
     privileged: true
@@ -26,7 +26,7 @@ services:
     stop_signal: SIGINT
 
   packet-forwarder:
-    image: suryatel/hm-pktfwd:{{PKTFWD_VERSION}}
+    image: suryatel/hm-pktfwd:8b375f8
     depends_on:
       - helium-miner
     restart: always
@@ -34,11 +34,11 @@ services:
     volumes:
       - pktfwdr:/var/pktfwd
     environment:
-      - FIRMWARE_VERSION={{FIRMWARE_VERSION}}
-      - FIRMWARE_SHORT_HASH={{ENV.FIRMWARE_SHORT_HASH}}
+      - FIRMWARE_VERSION=2022.06.02.3
+      - FIRMWARE_SHORT_HASH=4e75eee
 
   helium-miner:
-    image: suryatel/hm-miner:{{ARCH}}-{{MINER_VERSION}}
+    image: suryatel/hm-miner:arm64-b011311
     depends_on:
       - dbus-session
       - diagnostics
@@ -55,21 +55,21 @@ services:
     cap_add:
       - SYS_RAWIO
     devices:
-      - {{I2C_DEVICE}}:{{I2C_DEVICE}}
+      - /dev/i2c-1:/dev/i2c-1
     restart: on-failure
     environment:
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/session/dbus/session_bus_socket
-      - FIRMWARE_VERSION={{FIRMWARE_VERSION}}
-      - FIRMWARE_SHORT_HASH={{ENV.FIRMWARE_SHORT_HASH}}
+      - FIRMWARE_VERSION=2022.06.02.3
+      - FIRMWARE_SHORT_HASH=4e75eee
 
   diagnostics:
-    image: suryatel/hm-diag:{{DIAGNOSTICS_VERSION}}
+    image: suryatel/hm-diag:921f05a
     depends_on:
       - dbus-session
     environment:
-      - FIRMWARE_VERSION={{FIRMWARE_VERSION}}
-      - FIRMWARE_SHORT_HASH={{ENV.FIRMWARE_SHORT_HASH}}
-      - DIAGNOSTICS_VERSION={{DIAGNOSTICS_VERSION}}
+      - FIRMWARE_VERSION=2022.06.02.3
+      - FIRMWARE_SHORT_HASH=4e75eee
+      - DIAGNOSTICS_VERSION=921f05a
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
     volumes:
       - pktfwdr:/var/pktfwd
@@ -80,11 +80,11 @@ services:
     cap_add:
       - SYS_RAWIO
     devices:
-      - {{I2C_DEVICE}}:{{I2C_DEVICE}}
-      - {{MODEM_SERIAL0}}:{{MODEM_SERIAL0}}
-      - {{MODEM_SERIAL1}}:{{MODEM_SERIAL1}}
-      - {{MODEM_SERIAL2}}:{{MODEM_SERIAL2}}
-      - {{MODEM_SERIAL3}}:{{MODEM_SERIAL3}}
+      - /dev/i2c-1:/dev/i2c-1
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/ttyUSB2:/dev/ttyUSB2
+      - /dev/ttyUSB3:/dev/ttyUSB3
     privileged: true
     labels:
       io.balena.features.sysfs: 1
@@ -99,8 +99,8 @@ services:
       - dbus:/session/dbus
     environment:
       - DBUS_ADDRESS=unix:path=/session/dbus/session_bus_socket
-      - FIRMWARE_VERSION={{FIRMWARE_VERSION}}
-      - FIRMWARE_SHORT_HASH={{ENV.FIRMWARE_SHORT_HASH}}
+      - FIRMWARE_VERSION=2022.06.02.3
+      - FIRMWARE_SHORT_HASH=4e75eee
 
 volumes:
   miner-storage:
