@@ -9,7 +9,7 @@ services:
       - diagnostics
     environment:
       - FIRMWARE_VERSION=2022.06.02.3
-      - FIRMWARE_SHORT_HASH=4e75eee
+      - FIRMWARE_SHORT_HASH=4cbe56a
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
       - DBUS_SESSION_BUS_ADDRESS=unix:path=/session/dbus/session_bus_socket
     privileged: true
@@ -35,10 +35,10 @@ services:
       - pktfwdr:/var/pktfwd
     environment:
       - FIRMWARE_VERSION=2022.06.02.3
-      - FIRMWARE_SHORT_HASH=4e75eee
+      - FIRMWARE_SHORT_HASH=4cbe56a
 
   helium-miner:
-    image: suryatel/hm-miner:arm64-b011311
+    image: suryatel/hm-miner:arm64-e7318b9
     depends_on:
       - dbus-session
       - diagnostics
@@ -60,7 +60,7 @@ services:
     environment:
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/session/dbus/session_bus_socket
       - FIRMWARE_VERSION=2022.06.02.3
-      - FIRMWARE_SHORT_HASH=4e75eee
+      - FIRMWARE_SHORT_HASH=4cbe56a
 
   diagnostics:
     image: suryatel/hm-diag:921f05a
@@ -68,7 +68,7 @@ services:
       - dbus-session
     environment:
       - FIRMWARE_VERSION=2022.06.02.3
-      - FIRMWARE_SHORT_HASH=4e75eee
+      - FIRMWARE_SHORT_HASH=4cbe56a
       - DIAGNOSTICS_VERSION=921f05a
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
     volumes:
@@ -100,7 +100,7 @@ services:
     environment:
       - DBUS_ADDRESS=unix:path=/session/dbus/session_bus_socket
       - FIRMWARE_VERSION=2022.06.02.3
-      - FIRMWARE_SHORT_HASH=4e75eee
+      - FIRMWARE_SHORT_HASH=4cbe56a
 
 volumes:
   miner-storage:
